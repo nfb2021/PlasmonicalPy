@@ -8,7 +8,7 @@ from typing import Optional, List
 import pandas as pd
 
 ###################################################################################################################################################################
-# Can be used to create corrected BFP images. Given as inspiration, has to be adapted to users needs prior to running
+# Can be used to create corrected BFP images. Given as inspiration, has to be adapted to user's needs prior to running
 ###################################################################################################################################################################
 
 plt.rc('font', size = 25)
