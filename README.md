@@ -15,3 +15,7 @@ Then, follow these steps:
 5. cd PlasmonicalPy
 6. conda env create -f environment.yml
 7. conda activate PlasmonicalPy
+8. cd opencv_superres_models
+9. git clone https://github.com/Saafke/FSRCNN_Tensorflow.git
+10. git clone https://github.com/Saafke/EDSR_Tensorflow.git
+11. Move the pre-trained models from their correponsing directories "models" into "opencv_superres_models"
