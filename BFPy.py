@@ -12,6 +12,8 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable # type: ignore
 from scipy import ndimage
 from skimage.measure import profile_line # type: ignore
 from typing import Optional, List, Tuple
+from shapely.geometry import LineString, Point
+from descartes import PolygonPatch
 
 ###################################################################################################################################################################
 ###################################################################################################################################################################
@@ -849,6 +851,137 @@ class Analysis(FourierCorrelationAnalysis):
 
             if save == True:
                 plt.savefig(f'{self.name}_radial_profile_2.{self.out_format}', dpi = dpi)
+
+
+        if show == True:
+            plt.show()
+
+        
+        else:
+            plt.close()
+
+
+        return degs, intensities
+
+    def get_radial_slice_intensities(self, threshold: float, only_rad_plot: Optional[bool] = True, show: Optional[bool] = True, save: Optional[bool] = True):
+        contours, _ = self.get_contours(self.binary_otsu, show = False)
+        X, Y = self.get_coords_from_contours(contours)
+        cx, cy = self.get_center_coords()
+
+        lines = [([int(cx), x], [int(cy), y]) for (x,y) in zip(X, Y)]
+        line_lens = []
+
+        intensities = []
+        intersections = []
+        colors = cm.jet(np.linspace(0, 1, len(list(lines))))
+
+        fig = plt.figure(2)
+        ax = fig.add_subplot(111)
+        ax.imshow(self.gray, cmap = 'gray', vmin = np.amin(self.gray), vmax = np.amax(self.gray))
+
+        for c, (color, line) in enumerate(zip(colors, lines)):
+            xx, yy = line
+            
+            prof_line_whole = np.array(profile_line(self.gray, (xx[0], yy[0]), (xx[1], yy[1])))
+            prof_line = prof_line_whole[int(threshold * len(prof_line_whole)): ]
+
+            shapely_circle = Point(xx[1], yy[1]).buffer(len(prof_line))
+            shapely_line = LineString([[xx[0], yy[0]],  [xx[1], yy[1]]])
+            intersect = shapely_line.intersection(shapely_circle)
+            intersect_x, intersect_y = intersect.coords.xy[0][0], intersect.coords.xy[1][0]
+            intersections.append([intersect_x, intersect_y])
+
+            prof_line = np.array(profile_line(self.gray, (intersect_x, intersect_y), (xx[1], yy[1])))
+            intensities.append(np.sum(prof_line))
+            line_lens.append((np.sqrt(np.abs(xx[1] - intersect_x)**2 + np.abs(yy[1] - intersect_y)**2)))
+
+
+            if c == 0:
+                patch = PolygonPatch(shapely_circle, fc = 'None', ec='yellow')
+                ax.add_patch(patch)
+                ax.plot(xx, yy, color = 'yellow')
+                ax.plot(intersect.coords.xy[0][0], intersect.coords.xy[1][0], color = 'yellow', marker = 'x', markersize=markersize)
+                
+
+        # for coords in intersections:
+        #     ax.plot(coords[0], coords[1], marker = '.', color = 'yellow')
+        ax.set_xlim(0, len(self.gray[0]))
+        ax.set_ylim(0, len(self.gray))
+        ax.axis('off')
+        plt.gca().invert_yaxis()
+
+        plt.savefig("radial_slice_intensity_profile.pdf")
+        plt.show()
+
+
+        if int(0.02 * len(intensities)) % 2 == 0:
+            window_length = int(0.02 * len(intensities)) + 1
+        else:
+            window_length = int(0.02 * len(intensities))
+
+        try:
+            intensities = savgol_filter(intensities, window_length, 3)
+        except ValueError:
+            print('ValueError encountered in savgol filter')
+            return None
+
+        z2polar = lambda z: np.angle(z)
+
+        deg = 2*np.pi / (len(intensities))
+        degs = [x*deg for x, xx in enumerate(intensities)]
+        degs_p = [np.angle((xx - cx) +1j * (yy - cy)) + np.pi for (xx, yy) in zip(X, Y)]
+
+        def shift_cmap(color_arr):
+            deg_00 = np.rad2deg(np.arctan2((cx - X[0]), (cy - Y[0])))
+            add_shift = (2 * deg_00 / 360)
+
+            color_arr = list(color_arr)
+            col0 = color_arr[ : int(3 * len(color_arr) / 4)]
+            col1 = color_arr[int(3 * len(color_arr) / 4) : ]
+            color_arr = col1 + col0  
+
+            col0 = color_arr[ : int(add_shift * len(color_arr))]
+            col1 = color_arr[int(add_shift * len(color_arr)) : ]
+
+            return col1 + col0
+        
+        if only_rad_plot == True:
+            fig = plt.figure(9009, figsize=(6, 6))      
+            ax0 = fig.add_subplot(111, projection = 'polar')
+            for i,(deg, intensity) in enumerate(zip(degs_p, intensities)):
+                ax0.plot(deg, intensity, marker = '.', color = 'yellow')
+            ax0.set_theta_zero_location("N")
+        
+            if save == True:
+                plt.savefig(f'{self.name}_radial_profile_thres_{threshold}.{self.out_format}', dpi = dpi)
+
+        elif only_rad_plot == False:
+            fig = plt.figure(8008, figsize=(12, 6))
+            ax0 = fig.add_subplot(121)
+
+            ax0.plot(cx, cy, marker = 'X', markersize = 10, color = 'yellow', label = 'Center')
+            for (xx, yy, pp, color) in zip(X, Y, intersections, colors):
+                ax0.plot(xx, yy, marker = 'o', color = color, markersize = 5)
+                ax0.plot(pp[0], pp[1], marker = 'o', color = color, markersize = 5)
+
+            # ax0.gca().invert_yaxis()
+            ax0.axis('off')
+            ax0.imshow(self.gray, cmap = 'gray', vmin = np.amin(self.gray), vmax = np.amax(self.gray))
+
+
+            colors_r = cm.jet_r(np.linspace(0, 1, len(list(lines))))
+            colors_r = shift_cmap(colors_r)
+            ax1 = fig.add_subplot(122, projection = 'polar')
+            for i,(deg, intensity, color) in enumerate(zip(degs_p, intensities, colors_r)):
+                ax1.plot(deg, intensity, marker = '.', color = color)
+                # break
+            ax1.set_theta_zero_location("N")
+
+            plt.tight_layout()
+            plt.subplots_adjust(left=+0.05, bottom=0.1, right=0.85, top=0.9, wspace = 0.2)
+
+            if save == True:
+                plt.savefig(f'{self.name}_radial_profile_thres_{threshold}_2.{self.out_format}', dpi = dpi)
 
 
         if show == True:
