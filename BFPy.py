@@ -166,7 +166,7 @@ class Image:
                                 arr = raw
 
             else:
-                print(f'The csv-file corresponding to the specified image ({self.corresponding_csv}, {img}) was not found in the current working directory. Therefore, the image itself will be read in as source of data.')
+                print(f'\n\t\tThe csv-file corresponding to the specified image ({self.corresponding_csv}, {img}) was not found in the current working directory. Therefore, the image itself will be read in as source of data.')
                 arr = cv.imread(img)
                 try:
                     arr = cv.cvtColor(arr. cv.COLOR_BGR2GRAY)
@@ -458,12 +458,11 @@ class Image:
 
         # Create an SR object
         sr = dnn_superres.DnnSuperResImpl_create()
-
         # Read the desired model
         try:
-            sr.readModel(os.path.join('models', model))
+            sr.readModel(os.path.join('opencv_superres_models', model))
         except:
-            sr.readModel(os.path.join('..', 'models', model))
+            sr.readModel(os.path.join('..', '..', 'opencv_superres_models', model))
 
         # Set the desired model and scale to get correct pre- and post-processing
         name = model.split('_')[0].lower()
@@ -626,7 +625,7 @@ class FourierCorrelationAnalysis(Image):
         xc = 0.5 * ((0.5 * self.length) + mc2x)
         yc = 0.5 * ((0.5 * self.width) + mc1y)
 
-        print(f'\t\nCenter coordinates: xc: {xc}, yx: {yc}\n')
+        print(f'\n\t\tCenter coordinates: xc: {xc}, yx: {yc}\n')
         return xc, yc
 
 
@@ -791,7 +790,7 @@ class Analysis(FourierCorrelationAnalysis):
         try:
             intensities = savgol_filter(intensities, window_length, 3)
         except ValueError:
-            print('ValueError encountered in savgol filter')
+            print('\n\t\tValueError encountered in savgol filter')
             return None
         intensities /= np.max(intensities)    # normalization to a maximum of 1
 
