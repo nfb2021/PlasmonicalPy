@@ -1,16 +1,14 @@
-######### edited 07/02/2022, V4  #############
-
-import cv2 as cv # type: ignore
+import cv2 as cv
 from cv2 import dnn_superres
 import os
 import numpy as np
 from scipy.signal import fftconvolve, savgol_filter
-import matplotlib.pyplot as plt # type: ignore
-import matplotlib as mpl # type: ignore
+import matplotlib.pyplot as plt
+import matplotlib as mpl
 from matplotlib import cm
-from mpl_toolkits.axes_grid1 import make_axes_locatable # type: ignore
+from mpl_toolkits.axes_grid1 import make_axes_locatable
 from scipy import ndimage
-from skimage.measure import profile_line # type: ignore
+from skimage.measure import profile_line 
 from typing import Optional, List, Tuple
 from shapely.geometry import LineString, Point
 from descartes import PolygonPatch
@@ -26,6 +24,7 @@ markersize = 18
 dpi = 200
 cmap = mpl.cm.get_cmap("turbo").copy()
 marker_letters = ['$a$', '$b$', '$c$', '$d$', '$e$', '$f$', '$g$', '$h$', '$i$', '$j$', '$k$', '$l$', '$m$', '$n$', '$o$', '$p$', '$q$', '$r$', '$s$', '$t$', '$u$', '$v$', '$w$', '$x$', '$y$', '$z$']
+
 ###################################################################################################################################################################
 ###################################################################################################################################################################
 
