@@ -864,6 +864,21 @@ class Analysis(FourierCorrelationAnalysis):
         return degs, intensities
 
     def get_radial_slice_intensities(self, threshold: float, only_rad_plot: Optional[bool] = True, show: Optional[bool] = True, save: Optional[bool] = True):
+        """Calculates radial slice intensities and yields the corresponding polar representation. Based on radial intensity algorithm.
+
+
+        :param threshold: Threshold in percent of total radial line length, at which the slices should start
+        :type threshold: float
+        :param only_rad_plot: If only the radial intensity profile (black) is to be plotted or a version of the image with highlightes contour (color map) alongside the colored radial intensity profile
+        :type only_rad_plot: Optional[bool]
+        :param show: If the plot is to be shown
+        :type show: Optional[bool]
+        :param save: If the plot is to be saved
+        :type save: Optional[bool]
+        :returns: List of angles with list of corresponding radial intensities
+        :rtype: List, List
+        """
+
         contours, _ = self.get_contours(self.binary_otsu, show = False)
         X, Y = self.get_coords_from_contours(contours)
         cx, cy = self.get_center_coords()
@@ -875,11 +890,7 @@ class Analysis(FourierCorrelationAnalysis):
         intersections = []
         colors = cm.jet(np.linspace(0, 1, len(list(lines))))
 
-        fig = plt.figure(2)
-        ax = fig.add_subplot(111)
-        ax.imshow(self.gray, cmap = 'gray', vmin = np.amin(self.gray), vmax = np.amax(self.gray))
-
-        for c, (color, line) in enumerate(zip(colors, lines)):
+        for line in lines:
             xx, yy = line
             
             prof_line_whole = np.array(profile_line(self.gray, (xx[0], yy[0]), (xx[1], yy[1])))
@@ -894,24 +905,6 @@ class Analysis(FourierCorrelationAnalysis):
             prof_line = np.array(profile_line(self.gray, (intersect_x, intersect_y), (xx[1], yy[1])))
             intensities.append(np.sum(prof_line))
             line_lens.append((np.sqrt(np.abs(xx[1] - intersect_x)**2 + np.abs(yy[1] - intersect_y)**2)))
-
-
-            if c == 0:
-                patch = PolygonPatch(shapely_circle, fc = 'None', ec='yellow')
-                ax.add_patch(patch)
-                ax.plot(xx, yy, color = 'yellow')
-                ax.plot(intersect.coords.xy[0][0], intersect.coords.xy[1][0], color = 'yellow', marker = 'x', markersize=markersize)
-                
-
-        # for coords in intersections:
-        #     ax.plot(coords[0], coords[1], marker = '.', color = 'yellow')
-        ax.set_xlim(0, len(self.gray[0]))
-        ax.set_ylim(0, len(self.gray))
-        ax.axis('off')
-        plt.gca().invert_yaxis()
-
-        plt.savefig("radial_slice_intensity_profile.pdf")
-        plt.show()
 
 
         if int(0.02 * len(intensities)) % 2 == 0:
