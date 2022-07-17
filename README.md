@@ -19,3 +19,6 @@ Then follow these steps:
 9. type the following, then hit return: git clone https://github.com/Saafke/FSRCNN_Tensorflow.git
 10. type the following, then hit return: git clone https://github.com/Saafke/EDSR_Tensorflow.git
 11. Move the pre-trained models from their correponsing directories "opencv_superres_models/xxx/models" into "opencv_superres_models"
+
+Now, everything is set up and ready to be used.
+The minimum working example "BFPy_MWE.py" might take some time to run, depending on your machine's computational power.
