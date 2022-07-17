@@ -1,5 +1,5 @@
-BFPy library
-============
+BFPy module
+===========
 
 .. automodule:: BFPy
    :members:

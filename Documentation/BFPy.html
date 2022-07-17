@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BFPy library &mdash; BFPy July 17, 2022 documentation</title>
+  <title>BFPy module &mdash; BFPy July 17, 2022 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -41,7 +41,7 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Documentation</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">BFPy library</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">BFPy module</a></li>
 </ul>
 </li>
 </ul>
@@ -61,7 +61,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="modules.html">Documentation</a> &raquo;</li>
-      <li>BFPy library</li>
+      <li>BFPy module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/BFPy.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -72,7 +72,7 @@
            <div itemprop="articleBody">
              
   <section id="module-BFPy">
-<span id="bfpy-library"></span><h1>BFPy library<a class="headerlink" href="#module-BFPy" title="Permalink to this heading"></a></h1>
+<span id="bfpy-module"></span><h1>BFPy module<a class="headerlink" href="#module-BFPy" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="BFPy.Analysis">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">BFPy.</span></span><span class="sig-name descname"><span class="pre">Analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'png'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BFPy.Analysis" title="Permalink to this definition"></a></dt>
@@ -94,6 +94,28 @@ An instanciated object of this class has full access to all methods and attribut
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
+<li><p><strong>only_rad_plot</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – If only the radial intensity profile (black) is to be plotted or a version of the image with highlightes contour (color map) alongside the colored radial intensity profile</p></li>
+<li><p><strong>show</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – If the plot is to be shown</p></li>
+<li><p><strong>save</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – If the plot is to be saved</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of angles with list of corresponding radial intensities</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List, List</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BFPy.Analysis.get_radial_slice_intensities">
+<span class="sig-name descname"><span class="pre">get_radial_slice_intensities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_rad_plot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BFPy.Analysis.get_radial_slice_intensities" title="Permalink to this definition"></a></dt>
+<dd><p>Calculates radial slice intensities and yields the corresponding polar representation. Based on radial intensity algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>threshold</strong> (<em>float</em>) – Threshold in percent of total radial line length, at which the slices should start</p></li>
 <li><p><strong>only_rad_plot</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – If only the radial intensity profile (black) is to be plotted or a version of the image with highlightes contour (color map) alongside the colored radial intensity profile</p></li>
 <li><p><strong>show</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – If the plot is to be shown</p></li>
 <li><p><strong>save</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – If the plot is to be saved</p></li>
