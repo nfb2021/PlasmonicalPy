@@ -1,0 +1,4 @@
+Download pre-trained ML models yourself and place them inside this folder.
+
+FSRCNN models: https://github.com/Saafke/FSRCNN_Tensorflow
+EDSR models: https://github.com/Saafke/EDSR_Tensorflow
