@@ -9,7 +9,7 @@ Note: Anaconda is required for this procedure. You can obtain your copy here: ht
 
 Then follow these steps:
 
-1. navigate to lcoal directory on you machine, in which the repository is to be cloned into (where it will be stored)
+1. navigate to lcoal directory on your machine, in which the repository is to be cloned into (where it will be stored)
 2. If you have git installed, skip this step. Otherwise, in the Anaconda prompt (Windows) or terminal (Linux, MacOS) type the following, then hit return: conda install -c anaconda git
 4. type the following, then hit return: git clone https://github.com/nfb2021/PlasmonicalPy.git
 5. type the following, then hit return: cd PlasmonicalPy
