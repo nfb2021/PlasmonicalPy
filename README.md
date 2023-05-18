@@ -11,17 +11,17 @@ Then follow these steps:
 
 1. navigate to lcoal directory on your machine, in which the repository is to be cloned into (where it will be stored)
 2. If you have git installed, skip this step. Otherwise, in the Anaconda prompt (Windows) or terminal (Linux, MacOS) type the following, then hit return: conda install -c anaconda git
-4. type the following, then hit return: git clone https://github.com/nfb2021/PlasmonicalPy.git
-5. type the following, then hit return: cd PlasmonicalPy
-6. type the following, then hit return: conda env create -f environment.yml
-7. type the following, then hit return: conda activate PlasmonicalPy
-8. type the following, then hit return: cd opencv_superres_models
-9. type the following, then hit return: git clone https://github.com/Saafke/FSRCNN_Tensorflow.git
-10. type the following, then hit return: git clone https://github.com/Saafke/EDSR_Tensorflow.git
-11. type the following, then hit return: cd EDSR_Tensorflow/models
-12. type the following, then hit return: cp * ../..
-13. type the following, then hit return: cd ../../FSRCNN_Tensorflow/models/models
-14. type the following, then hit return: cp * ../..
+3. type the following, then hit return: git clone https://github.com/nfb2021/PlasmonicalPy.git
+4. type the following, then hit return: cd PlasmonicalPy
+5. type the following, then hit return: conda env create -f environment.yml
+6. type the following, then hit return: conda activate PlasmonicalPy
+7. type the following, then hit return: cd opencv_superres_models
+8. type the following, then hit return: git clone https://github.com/Saafke/FSRCNN_Tensorflow.git
+9. type the following, then hit return: git clone https://github.com/Saafke/EDSR_Tensorflow.git
+10. type the following, then hit return: cd EDSR_Tensorflow/models
+11. type the following, then hit return: cp * ../..
+12. type the following, then hit return: cd ../../FSRCNN_Tensorflow/models/models
+13. type the following, then hit return: cp * ../..
 
 Now, everything is set up and ready to be used.
 The minimum working example "BFPy_MWE.py" might take some time to run, depending on your machine's computational power.
