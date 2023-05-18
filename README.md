@@ -5,7 +5,7 @@ For further information, refer to my Master Thesis
 ## IMPORTANT: updated installation procedure below
 
 The specified installation instructions in the printed vesion of the Master Thesis are no longer supported.
-Note: Anaconda is required for this procedure. You can obtain your copy here: https://www.anaconda.com/products/distribution#Downloads
+Note: Anaconda is required for this procedure. You can obtain your copy [here](https://www.anaconda.com/products/distribution#Downloads)
 
 Then follow these steps:
 
