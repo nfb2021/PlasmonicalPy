@@ -1,7 +1,0 @@
-BFPy module
-===========
-
-.. automodule:: BFPy
-   :members:
-   :undoc-members:
-   :show-inheritance:
